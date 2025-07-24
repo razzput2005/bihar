@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>College Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    #user-info {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #2c3e50;
+      background: #fff;
+      padding: 6px 12px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    input {
+      padding: 10px;
+      width: 250px;
+      margin: 8px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      background: #2c3e50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      background: #34495e;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="user-info"></div>
+
+  <div class="login-container">
+    <input type="text" id="name" placeholder="Enter your name" />
+    <input type="email" id="email" placeholder="Enter your email" />
+    <input type="password" id="password" placeholder="Enter your password" />
+    
+    <button class="btn" onclick="login()">Login</button>
+    <button class="btn" onclick="resetPassword()">Reset Account</button>
+  </div>
+
+  <script>
+    // Show logged-in user info
+    const name = localStorage.getItem("signupName");
+    const email = localStorage.getItem("signupEmail");
+    if (localStorage.getItem("isLoggedIn") === "true" && name && email) {
+      document.getElementById("user-info").innerHTML = `Welcome, ${name} (${email})`;
+    }
+
+    function login() {
+      const inputName = document.getElementById("name").value.trim();
+      const inputEmail = document.getElementById("email").value.trim();
+      const inputPassword = document.getElementById("password").value.trim();
+
+      const storedName = localStorage.getItem("signupName");
+      const storedEmail = localStorage.getItem("signupEmail");
+      const storedPassword = localStorage.getItem("signupPassword");
+
+      if (inputName === storedName && inputEmail === storedEmail && inputPassword === storedPassword) {
+        localStorage.setItem("isLoggedIn", "true");
+        alert("Login successful!");
+        window.location.href = "pawan.html"; // replace with dashboard
+      } else {
+        alert("Login failed! Please signup first or check your credentials.");
+      }
+    }
+
+    function resetPassword() {
+      localStorage.removeItem("signupName");
+      localStorage.removeItem("signupEmail");
+      localStorage.removeItem("signupPassword");
+      alert("Account reset. Please signup again.");
+      window.location.href = "signup.html"; // redirect to signup page
+    }
+  </script>
+<p style="text-align:center;">Don't have an account? <a href="signup.html">Signup here</a></p>
+
+</body>
+</html>
